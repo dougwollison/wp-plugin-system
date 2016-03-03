@@ -6,6 +6,7 @@
  * Copies the contents to a sepcified directory,
  * with all name placeholders taken care of.
  */
+chdir( __DIR__ );
 
 $plugin = array();
 
@@ -56,13 +57,12 @@ if ( ! $plugin['dir'] ) {
 // Calculate real path
 $plugin['dir'] = realpath( $plugin['dir'] );
 
-
 function rename_files( $dir ) {
 	global $plugin;
 
 	$files = scandir( $dir );
 	foreach ( $files as $file ) {
-		if ( substr( $file, 0, 1 ) == '.' || $file == 'build' ) {
+		if ( substr( $file, 0, 1 ) == '.' || in_array( $file, array( 'build', 'README.md', 'readme.txt' ) ) ) {
 			continue;
 		}
 
@@ -94,6 +94,9 @@ function rename_files( $dir ) {
 				substr( "$dir/$file", strlen( __DIR__ ) )
 			);
 
+			if ( ! file_exists( dirname( $destination ) ) ) {
+				mkdir( dirname( $destination ), 0777, true );
+			}
 			file_put_contents( $destination, $content );
 		}
 	}
