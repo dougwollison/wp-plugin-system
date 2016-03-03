@@ -1,4 +1,4 @@
-=== nLingual ===
+=== [plugin name] ===
 Contributors: dougwollison
 Tags: [plugin tags]
 Requires at least: 4.0
