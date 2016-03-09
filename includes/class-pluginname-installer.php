@@ -1,6 +1,6 @@
 <?php
 /**
- * PluginName Loader Functionality
+ * PluginName Installation Functionality
  *
  * @package PluginName
  * @subpackage Handlers
@@ -11,7 +11,7 @@
 namespace PluginName;
 
 /**
- * The Plugin Loader
+ * The Plugin Installer
  *
  * Registers activate/deactivate/uninstall hooks, and handle
  * any necessary upgrading from an existing install.
@@ -24,7 +24,7 @@ namespace PluginName;
  * @since 1.0.0
  */
 
-class Loader extends Handler {
+class Installer extends Handler {
 	// =========================
 	// ! Hook Registration
 	// =========================
