@@ -186,7 +186,7 @@ class Documenter extends Handler {
 			if ( $content ) {
 				$screen->add_help_tab( array(
 					'id' => "PluginName-{$help_id}-{$tab}",
-					'title' => __( $title ),
+					'title' => $title,
 					'content' => $content,
 				) );
 			}
