@@ -66,7 +66,7 @@ class Manager extends Handler {
 			__( '[plugin name] Options', 'plugin-name' ), // page title
 			_x( '[plugin name]', 'menu title', 'plugin-name' ), // menu title
 			'manage_options', // capability
-			'pluginname', // slug
+			'pluginname-options', // slug
 			array( get_called_class(), 'settings_page' ), // callback
 			'dashicons-admin-generic' // icon
 		);
@@ -85,16 +85,55 @@ class Manager extends Handler {
 	 * Register the settings/fields for the admin pages.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @uses Settings::register() to register the settings.
+	 * @uses Manager::setup_options_fields() to add fields to the main options fields.
 	 */
 	public static function register_settings() {
-		// to be written
+		register_setting( 'pluginname-options', 'pluginname_options', array( __CLASS__, 'update_options' ) );
+		static::setup_options_fields();
+	}
+
+	// =========================
+	// ! Settings Saving
+	// =========================
+
+	/**
+	 * Merge the updated options with the rest before saving.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param mixed $value The options being updated.
+	 *
+	 * @return mixed The merged/sanitized options.
+	 */
+	public static function update_options( $updated_options ) {
+		$all_options = get_option( 'pluginname_options', array() );
+
+		return array_merge( $all_options, $updated_options );
 	}
 
 	// =========================
 	// ! Settings Fields Setup
 	// =========================
 
-	// to be written
+	/**
+	 * Fields for the Translations page.
+	 *
+	 * @since 1.0.0
+	 */
+	protected static function setup_options_fields() {
+		/**
+		 * General Settings
+		 */
+		$general_settings = array(
+			// to be written
+		);
+
+		// Add the section and fields
+		add_settings_section( 'default', null, null, 'pluginname-options' );
+		Settings::add_fields( $general_settings, 'options' );
+	}
 
 	// =========================
 	// ! Settings Page Output
