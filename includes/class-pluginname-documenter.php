@@ -178,15 +178,18 @@ class Documenter extends Handler {
 		// Get the help info for this page
 		$help = static::$directory[ $help_id ];
 
+		// Build the list of titles for each tab
+		$tab_titles = array();
+
 		// Add each tab defined
-		foreach ( $help['tabs'] as $tab => $title ) {
+		foreach ( $help['tabs'] as $tab ) {
 			$content = static::get_tab_content( $tab, $help_id );
 
 			// Only add if there's content
 			if ( $content ) {
 				$screen->add_help_tab( array(
 					'id' => "PluginName-{$help_id}-{$tab}",
-					'title' => $title,
+					'title' => $tab_titles[ $tab ],
 					'content' => $content,
 				) );
 			}
