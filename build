@@ -49,7 +49,7 @@ if ( $value = readline( "Override assumed slug ({$plugin['slug']})? " ) ) {
 }
 
 // Get the plugin directory
-$plugin['dir'] = readline( "Where should your plugin be? Leave blank for this boilerplate's parent directory (../): " );
+$plugin['dir'] = readline( "Where should your plugin be? Leave blank for this boilerplate's parent directory (" . dirname( __DIR__ ) . "): " );
 if ( ! $plugin['dir'] ) {
 	$plugin['dir'] = '../';
 }
