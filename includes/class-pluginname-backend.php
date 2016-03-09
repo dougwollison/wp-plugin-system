@@ -120,4 +120,3 @@ class Backend extends Handler {
 		) );
 	}
 }
-

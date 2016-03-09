@@ -43,4 +43,3 @@ class AJAX extends Handler {
 		// to be written
 	}
 }
-

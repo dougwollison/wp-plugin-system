@@ -109,4 +109,3 @@ class Manager extends Handler {
 		<?php
 	}
 }
-

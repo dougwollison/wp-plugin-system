@@ -172,4 +172,3 @@ class Loader extends Handler {
 		// to be written
 	}
 }
-

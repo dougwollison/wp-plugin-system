@@ -206,4 +206,3 @@ class Documenter extends Handler {
 		}
 	}
 }
-
