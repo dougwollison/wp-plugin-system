@@ -16,9 +16,6 @@ namespace PluginName;
  * Hooks into various backend systems to load
  * custom assets and add the editor interface.
  *
- * @package PluginName
- * @subpackage Handlers
- *
  * @internal Used by the System.
  *
  * @since 1.0.0

@@ -16,9 +16,6 @@ namespace PluginName;
  * Hooks into the backend to add the interfaces for
  * managing the configuration of PluginName.
  *
- * @package PluginName
- * @subpackage Handlers
- *
  * @internal Used by the System.
  *
  * @since 1.0.0

@@ -16,9 +16,6 @@ namespace PluginName;
  * Add necessary wp_ajax_* hooks to fullfill any
  * custom AJAX requests.
  *
- * @package PluginName
- * @subpackage Handlers
- *
  * @internal Used by the System.
  *
  * @since 1.0.0
@@ -39,7 +36,7 @@ class AJAX extends Handler {
 		if ( ! defined( 'DOING_AJAX' ) || DOING_AJAX !== true ) {
 			return;
 		}
-		
+
 		// to be written
 	}
 }

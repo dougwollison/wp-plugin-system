@@ -16,9 +16,6 @@ namespace PluginName;
  * Handles printing out the help screen tabs/sidebar for
  * documenting custom parts of the admin interface.
  *
- * @package PluginName
- * @subpackage Helpers
- *
  * @internal Used by the Manager and Localizer.
  *
  * @since 1.0.0

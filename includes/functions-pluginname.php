@@ -38,59 +38,6 @@ function is_backend() {
 }
 
 // =========================
-// ! GetText Functions
-// =========================
-
-/**
- * The following functions are aliases to the public
- * localization functions, but with the PluginName text
- * domain included automatically, since it's used in
- * 99% of calls within the classes.
- */
-
-/**
- * @see __()
- */
-function __( $string ) {
-	return \__( $string, 'plugin-name' );
-}
-
-/**
- * @see _e()
- */
-function _e( $string ) {
-	return \_e( $string, 'plugin-name' );
-}
-
-/**
- * @see _n()
- */
-function _n( $single, $plural, $number ) {
-	return \_n( $single, $plural, $number, 'plugin-name' );
-}
-
-/**
- * @see _x()
- */
-function _x( $string, $context ) {
-	return \_x( $string, 'plugin-name' );
-}
-
-/**
- * @see _ex()
- */
-function _ex( $string, $context ) {
-	\_ex( $string, 'plugin-name' );
-}
-
-/**
- * @see _nx()
- */
-function _nx( $single, $plural, $number, $context ) {
-	return \_nx( $single, $plural, $number, $context, 'plugin-name' );
-}
-
-// =========================
 // ! Misc. Utilities
 // =========================
 
@@ -102,5 +49,5 @@ function _nx( $single, $plural, $number, $context ) {
  * @since 1.0.0
  */
 function cheatin() {
-	wp_die( \__( 'Cheatin&#8217; uh?' ), 403 );
+	wp_die( __( 'Cheatin&#8217; uh?' ), 403 );
 }

@@ -16,12 +16,8 @@ namespace PluginName;
  * The Handler Framework
  *
  * The basis for the any classes that need to hook into WordPress.
- * Must be initialized after loading (handled by autoloader),
- * and defines aliases to the WordPress Plugin API, adding the
+ * Provides aliases to the WordPress Plugin API, adding the
  * specified method of the current class to the specified hook.
- *
- * @package PluginName
- * @subpackage Abstracts
  *
  * @internal
  *

@@ -16,9 +16,6 @@ namespace PluginName;
  * Registers activate/deactivate/uninstall hooks, and handle
  * any necessary upgrading from an existing install.
  *
- * @package PluginName
- * @subpackage Handlers
- *
  * @internal Used by the System.
  *
  * @since 1.0.0
