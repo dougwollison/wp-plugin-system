@@ -13,8 +13,8 @@ namespace PluginName;
 /**
  * The Plugin Loader
  *
- * Registers the necessary hooks to handle the PluginName plugin's
- * (un)installation and (de)activation.
+ * Registers activate/deactivate/uninstall hooks, and handle
+ * any necessary upgrading from an existing install.
  *
  * @package PluginName
  * @subpackage Handlers
@@ -34,15 +34,18 @@ class Loader extends Handler {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @uses NL_SELF to identify the plugin file.
+	 * @uses SLUG_PLUGIN_FILE to identify the plugin file.
 	 * @uses Loader::plugin_activate() as the activation hook.
 	 * @uses Loader::plugin_deactivate() as the deactivation hook.
 	 * @uses Loader::plugin_uninstall() as the uninstall hook.
 	 */
 	public static function register_hooks() {
-		register_activation_hook( NL_SELF, array( get_called_class(), 'plugin_activate' ) );
-		register_deactivation_hook( NL_SELF, array( get_called_class(), 'plugin_deactivate' ) );
-		register_uninstall_hook( NL_SELF, array( get_called_class(), 'plugin_uninstall' ) );
+		register_activation_hook( SLUG_PLUGIN_FILE, array( get_called_class(), 'plugin_activate' ) );
+		register_deactivation_hook( SLUG_PLUGIN_FILE, array( get_called_class(), 'plugin_deactivate' ) );
+		register_uninstall_hook( SLUG_PLUGIN_FILE, array( get_called_class(), 'plugin_uninstall' ) );
+
+		// Upgrade logic
+		static::add_action( 'plugins_loaded', 'upgrade', 10, 0 );
 	}
 
 	// =========================
@@ -64,8 +67,9 @@ class Loader extends Handler {
 			$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
 			check_admin_referer( "{$check_referer}-plugin_{$plugin}" );
 		} else {
-			// Check if this is the intended file for uninstalling
-			if ( __FILE__ != WP_UNINSTALL_PLUGIN ) {
+			// Check if this is the intended plugin for uninstalling
+			if ( ! isset( $_REQUEST['checked'] )
+			|| ! in_array( plugin_basename( SLUG_PLUGIN_FILE ), $_REQUEST['checked'] ) ) {
 				return false;
 			}
 		}
@@ -93,7 +97,11 @@ class Loader extends Handler {
 			return;
 		}
 
-		// to be written
+		// Attempt to upgrade, in case we're activating after an plugin update
+		if ( ! static::upgrade() ) {
+			// Otherwise just install the options/tables
+			static::install();
+		}
 	}
 
 	/**
@@ -129,8 +137,39 @@ class Loader extends Handler {
 			return;
 		}
 
-		// And delete the options
-		$wpdb->query( "DELETE FORM $wpdb->options WHERE option_name like 'pluginname\_%'" );
+		delete_option( "pluginname_options" );
+	}
+
+	// =========================
+	// ! Install Logic
+	// =========================
+
+	/**
+	 * Install the default options.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @uses Registry::get_defaults() to get the default option values.
+	 */
+	protected static function install() {
+		// Default options
+		$default_options = Registry::get_defaults();
+		add_option( 'pluginname_options', $default_options );
+	}
+
+	// =========================
+	// ! Upgrade Logic
+	// =========================
+
+	/**
+	 * Install/Upgrade the database tables, converting them if needed.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return bool Wether or not an upgrade was performed.
+	 */
+	public static function upgrade() {
+		// to be written
 	}
 }
 

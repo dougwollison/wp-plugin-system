@@ -16,32 +16,12 @@ namespace PluginName;
  * Internal-use utility kit for printing out
  * the option fields for the Manager.
  *
- * @package PluginName
- * @subpackage Helpers
- *
  * @internal Used by the Manager.
  *
  * @since 1.0.0
  */
 
 class Settings {
-	/**
-	 * Register the desired settings.
-	 *
-	 * Prefixes all option names with "pluginname_"
-	 * and the group name with "pluginname-"
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array  $settings The settings to register, in name => sanitize_callback format.
-	 * @param string $group    The name of the group to register them for.
-	 */
-	public static function register( array $settings, $group ) {
-		foreach ( $settings as $setting => $callback ) {
-			register_setting( "pluginname-{$group}", "pluginname_{$setting}", $callback );
-		}
-	}
-
 	/**
 	 * Add the desired settings field.
 	 *
@@ -72,11 +52,22 @@ class Settings {
 			'data'  => array()
 		) );
 
+		// Handle prefixing the name with pluginname_options
+		if ( preg_match( '/([^\[]+)(\[.+\])/', $field, $matches ) ) {
+			$id = "pluginname_" . trim( preg_replace( '/[\[\]]+/', '_', $field ), '_' );
+			$name = "pluginname_options[{$matches[1]}]{$matches[2]}";
+		} else {
+			$id = "pluginname_{$field}";
+			$name = "pluginname_options[{$field}]";
+		}
+
 		// Build the callback arguments
 		$class = sanitize_key( $field );
 		$args = array(
-			'class'     => "pm-settings-field pm-settings-{$page}-field pluginname_{$class}-field",
-			'name'      => "pluginname_{$field}",
+			'class'     => "slug-settings-field slug-settings-{$page}-field pluginname_{$class}-field",
+			'option'    => $field,
+			'id'        => $id,
+			'name'      => $name,
 			'label'     => $options['label'],
 			'help'      => $options['help'],
 			'type'      => $options['type'],
@@ -85,7 +76,7 @@ class Settings {
 
 		// Add label_for arg if appropriate
 		if ( ! in_array( $options['type'], array( 'radiolist', 'checklist', 'checkbox', 'sync_settings' ) ) ) {
-			$args['label_for'] = "pluginname_{$field}";
+			$args['label_for'] = $args['id'];
 		}
 
 		// Add the settings field
@@ -146,13 +137,13 @@ class Settings {
 			// See if we need to go deeper
 			if ( $map ) {
 				return static::extract_value( $array[ $key ], $map );
-			} else {
-				return $array[ $key ];
 			}
-		} else {
-			// Nothing found.
-			return null;
+
+			return $array[ $key ];
 		}
+
+		// Nothing found.
+		return null;
 	}
 
 	/**
@@ -175,7 +166,7 @@ class Settings {
 		}
 
 		// Get the value
-		$value = get_option( $name );
+		$value = Registry::get( $name );
 
 		// Process the value via the map if necessary
 		if ( $map ) {
@@ -206,20 +197,32 @@ class Settings {
 	public static function build_field( $args, $value = null ) {
 		// Get the value for the field if not provided
 		if ( is_null( $value ) ) {
-			$value = static::get_value( $args['name'] );
+			$value = static::get_value( $args['option'] );
 		}
 
 		switch ( $args['type'] ) {
+			// Not actually fields
+			case 'notice':
+				$method = "print_notice";
+				$cb_args = array( $args['data'] );
+				break;
+
+			// Special fields
 			case 'select':
 			case 'radiolist':
 			case 'checklist':
 				$method = "build_{$args['type']}_field";
-				$cb_args = array( $args['name'], $value, $args['data'] );
+				if ( $args['type'] == 'select' ) {
+					$cb_args = array( $args['name'], $args['id'], $value, $args['data'] );
+				} else {
+					$cb_args = array( $args['name'], $value, $args['data'] );
+				}
 				break;
 
+			// Regular fields
 			default:
 				$method = "build_input_field";
-				$cb_args = array( $args['name'], $value, $args['type'], $args['data'] );
+				$cb_args = array( $args['name'], $args['id'], $value, $args['type'], $args['data'] );
 		}
 
 		$html = call_user_func_array( array( get_called_class(), $method ), $cb_args );
@@ -245,18 +248,16 @@ class Settings {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $name       The name/ID of the field.
+	 * @param string $name       The name of the field.
+	 * @param string $id         The ID of the field.
 	 * @param mixed  $value      The value of the field.
 	 * @param string $label      Optional. The label for the input.
 	 * @param array  $attributes Optional. Custom attributes for the field.
 	 *
 	 * @return string The HTML of the field.
 	 */
-	protected static function build_input_field( $name, $value, $type, $attributes = array() ) {
+	protected static function build_input_field( $name, $id, $value, $type, $attributes = array() ) {
 		$html = '';
-
-		// Create an ID out of the name
-		$id = sanitize_key( $name );
 
 		// Ensure $attributes is an array
 		$attributes = (array) $attributes;
@@ -301,15 +302,13 @@ class Settings {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $name    The name/ID of the field.
+	 * @param string $name       The name of the field.
+	 * @param string $id         The ID of the field.
 	 * @param mixed  $value   The value of the field.
 	 * @param array  $options The options for the field.
 	 */
-	protected static function build_select_field( $name, $value, $options ) {
+	protected static function build_select_field( $name, $id, $value, $options ) {
 		$html = '';
-
-		// Create an ID out of the name
-		$id = sanitize_key( $name );
 
 		$html .= sprintf( '<select name="%s" id="%s">', $name, $id );
 		foreach ( $options as $val => $label ) {
@@ -327,7 +326,7 @@ class Settings {
 	 * @since 1.0.0
 	 *
 	 * @param string $type    The input type.
-	 * @param string $name    The name/ID of the field.
+	 * @param string $name    The name of the field.
 	 * @param mixed  $value   The value of the field.
 	 * @param array  $options The options for the field.
 	 */
@@ -346,7 +345,7 @@ class Settings {
 			$inputs[] = sprintf( '<label><input type="%s" name="%s" value="%s"%s /> %s</label>', $type, $name, $val, $checked, $label );
 		}
 
-		$html = '<fieldset class="pm-inputlist">' . implode( '<br /> ', $inputs ) . '</fieldset>';
+		$html = '<fieldset class="slug-inputlist">' . implode( '<br /> ', $inputs ) . '</fieldset>';
 
 		return $html;
 	}
@@ -368,5 +367,17 @@ class Settings {
 	protected static function build_checklist_field( $name, $value, $options ) {
 		return static::build_inputlist_field( 'checkbox', $name, $value, $options );
 	}
-}
 
+	/**
+	 *
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $name  The name of the field.
+	 * @param mixed  $value The value of the field.
+	 * @param string $text  The notice text.
+	 */
+	protected static function print_notice( $text ) {
+		printf( '<p><span class="slug-settings-notice">%s</span></p>', $text );
+	}
+}

@@ -42,8 +42,8 @@ class Backend extends Handler {
 			return;
 		}
 
-		// Post-setup stuff
-		static::add_action( 'plugins_loaded', 'ready' );
+		// Setup stuff
+		static::add_action( 'plugins_loaded', 'load_textdomain', 10, 0 );
 
 		// Plugin information
 		static::add_action( 'in_plugin_update_message-' . plugin_basename( SLUG_PLUGIN_FILE ), 'update_notice' );
@@ -53,7 +53,7 @@ class Backend extends Handler {
 	}
 
 	// =========================
-	// ! Post-Setup Stuff
+	// ! Setup Stuff
 	// =========================
 
 	/**
@@ -61,9 +61,9 @@ class Backend extends Handler {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function ready() {
+	public static function load_textdomain() {
 		// Load the textdomain
-		load_plugin_textdomain( 'plugin-name', false, SLUG_PLUGIN_DIR . '/lang' );
+		load_plugin_textdomain( 'pluginname', false, dirname( SLUG_PLUGIN_FILE ) . '/languages' );
 	}
 
 	// =========================

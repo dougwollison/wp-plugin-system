@@ -9,6 +9,7 @@ Author URI: http://dougw.me
 Tags: [plugin tags]
 License: GPL2
 Text Domain: plugin-name
+Domain Path: /languages
 */
 
 // =========================
@@ -37,8 +38,8 @@ define( 'SLUG_PLUGIN_DIR', dirname( SLUG_PLUGIN_FILE ) );
 // ! Includes
 // =========================
 
-require( SLUG_PLUGIN_DIR . '/inc/autoloader.php' );
-require( SLUG_PLUGIN_DIR . '/inc/functions-pluginname.php' );
+require( SLUG_PLUGIN_DIR . '/includes/autoloader.php' );
+require( SLUG_PLUGIN_DIR . '/includes/functions-pluginname.php' );
 
 // =========================
 // ! Setup
