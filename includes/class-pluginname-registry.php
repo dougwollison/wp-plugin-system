@@ -145,7 +145,7 @@ class Registry {
 	public static function set( $option, $value = null ) {
 		// Trigger notice error if trying to set an unsupported option
 		if ( ! static::has( $option ) ) {
-			trigger_error( "[PluginName] The option '{$option}' is not supported", E_NOTICE );
+			trigger_error( "[PluginName] The option '{$option}' is not supported", E_USER_NOTICE );
 		}
 
 		static::$options[ $option ] = $value;
