@@ -59,9 +59,25 @@ class Manager extends Handler {
 	 * Register admin pages.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @uses Manager::settings_page() for general options page output.
+	 * @uses Documenter::register_help_tabs() to register help tabs for all screens.
 	 */
 	public static function add_menu_pages() {
-		// to be written
+		// Main Options page
+		$options_page_hook = add_utility_page(
+			__( '[plugin name] Options', 'plugin-name' ), // page title
+			_x( '[plugin name]', 'menu title', 'plugin-name' ), // menu title
+			'manage_options', // capability
+			'pluginname', // slug
+			array( get_called_class(), 'settings_page' ), // callback
+			'dashicons-admin-generic' // icon
+		);
+
+		// Setup the help tabs for each page
+		Documenter::register_help_tabs( array(
+			$options_page_hook => 'options',
+		) );
 	}
 
 	// =========================
