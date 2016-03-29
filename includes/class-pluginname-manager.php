@@ -30,7 +30,7 @@ final class Manager extends Handler {
 	 *
 	 * @since 1.0.0
 	 */
-	final public static function register_hooks() {
+	public static function register_hooks() {
 		// Don't do anything if not in the backend
 		if ( ! is_backend() ) {
 			return;
@@ -59,7 +59,7 @@ final class Manager extends Handler {
 	 * @uses Manager::settings_page() for general options page output.
 	 * @uses Documenter::register_help_tabs() to register help tabs for all screens.
 	 */
-	final public static function add_menu_pages() {
+	public static function add_menu_pages() {
 		// Main Options page
 		$options_page_hook = add_utility_page(
 			__( '[plugin name] Options', 'plugin-name' ), // page title
@@ -88,7 +88,7 @@ final class Manager extends Handler {
 	 * @uses Settings::register() to register the settings.
 	 * @uses Manager::setup_options_fields() to add fields to the main options fields.
 	 */
-	final public static function register_settings() {
+	public static function register_settings() {
 		register_setting( 'pluginname-options', 'pluginname_options', array( __CLASS__, 'update_options' ) );
 		static::setup_options_fields();
 	}
@@ -106,7 +106,7 @@ final class Manager extends Handler {
 	 *
 	 * @return mixed The merged/sanitized options.
 	 */
-	final public static function update_options( $updated_options ) {
+	public static function update_options( $updated_options ) {
 		$all_options = get_option( 'pluginname_options', array() );
 
 		return array_merge( $all_options, $updated_options );
@@ -121,7 +121,7 @@ final class Manager extends Handler {
 	 *
 	 * @since 1.0.0
 	 */
-	final protected static function setup_options_fields() {
+	protected static function setup_options_fields() {
 		/**
 		 * General Settings
 		 */
@@ -145,7 +145,7 @@ final class Manager extends Handler {
 	 *
 	 * @global $plugin_page The slug of the current admin page.
 	 */
-	final public static function settings_page() {
+	public static function settings_page() {
 		global $plugin_page;
 ?>
 		<div class="wrap">
