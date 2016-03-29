@@ -20,8 +20,7 @@ namespace PluginName;
  *
  * @since 1.0.0
  */
-
-class System extends Handler {
+final class System extends Handler {
 	// =========================
 	// ! Master Setup Method
 	// =========================
@@ -39,7 +38,7 @@ class System extends Handler {
 	 * @uses Manager::register_hooks() to setup admin screens.
 	 * @uses Documenter::register_hooks() to setup admin documentation.
 	 */
-	public static function setup() {
+	final public static function setup() {
 		// Setup the registry
 		Registry::load();
 
@@ -65,7 +64,7 @@ class System extends Handler {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function register_hooks() {
+	final public static function register_hooks() {
 		// to be written
 	}
 }

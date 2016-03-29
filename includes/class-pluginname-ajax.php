@@ -20,8 +20,7 @@ namespace PluginName;
  *
  * @since 1.0.0
  */
-
-class AJAX extends Handler {
+final class AJAX extends Handler {
 	// =========================
 	// ! Hook Registration
 	// =========================
@@ -31,7 +30,7 @@ class AJAX extends Handler {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function register_hooks() {
+	final public static function register_hooks() {
 		// Don't do anything if not doing an AJAX request
 		if ( ! defined( 'DOING_AJAX' ) || DOING_AJAX !== true ) {
 			return;

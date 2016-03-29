@@ -20,8 +20,7 @@ namespace PluginName;
  *
  * @since 1.0.0
  */
-
-class Installer extends Handler {
+final class Installer extends Handler {
 	// =========================
 	// ! Hook Registration
 	// =========================
@@ -36,7 +35,7 @@ class Installer extends Handler {
 	 * @uses Loader::plugin_deactivate() as the deactivation hook.
 	 * @uses Loader::plugin_uninstall() as the uninstall hook.
 	 */
-	public static function register_hooks() {
+	final public static function register_hooks() {
 		register_activation_hook( SLUG_PLUGIN_FILE, array( get_called_class(), 'plugin_activate' ) );
 		register_deactivation_hook( SLUG_PLUGIN_FILE, array( get_called_class(), 'plugin_deactivate' ) );
 		register_uninstall_hook( SLUG_PLUGIN_FILE, array( get_called_class(), 'plugin_uninstall' ) );
@@ -54,7 +53,7 @@ class Installer extends Handler {
 	 *
 	 * @since 1.0.0
 	 */
-	protected static function plugin_security_check( $check_referer = null ) {
+	final protected static function plugin_security_check( $check_referer = null ) {
 		// Make sure they have permisson
 		if ( ! current_user_can( 'activate_plugins' ) ) {
 			return false;
@@ -87,7 +86,7 @@ class Installer extends Handler {
 	 *
 	 * @global wpdb $wpdb The database abstraction class instance.
 	 */
-	public static function plugin_activate() {
+	final public static function plugin_activate() {
 		global $wpdb;
 
 		if ( ! static::plugin_security_check( 'activate' ) ) {
@@ -110,7 +109,7 @@ class Installer extends Handler {
 	 *
 	 * @global wpdb $wpdb The database abstraction class instance.
 	 */
-	public static function plugin_deactivate() {
+	final public static function plugin_deactivate() {
 		global $wpdb;
 
 		if ( ! static::plugin_security_check( 'deactivate' ) ) {
@@ -129,7 +128,7 @@ class Installer extends Handler {
 	 *
 	 * @global wpdb $wpdb The database abstraction class instance.
 	 */
-	public static function plugin_uninstall() {
+	final public static function plugin_uninstall() {
 		if ( ! static::plugin_security_check() ) {
 			return;
 		}
@@ -148,7 +147,7 @@ class Installer extends Handler {
 	 *
 	 * @uses Registry::get_defaults() to get the default option values.
 	 */
-	protected static function install() {
+	final protected static function install() {
 		// Default options
 		$default_options = Registry::get_defaults();
 		add_option( 'pluginname_options', $default_options );
@@ -165,7 +164,7 @@ class Installer extends Handler {
 	 *
 	 * @return bool Wether or not an upgrade was performed.
 	 */
-	public static function upgrade() {
+	final public static function upgrade() {
 		// to be written
 	}
 }

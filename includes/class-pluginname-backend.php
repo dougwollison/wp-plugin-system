@@ -20,8 +20,7 @@ namespace PluginName;
  *
  * @since 1.0.0
  */
-
-class Backend extends Handler {
+final class Backend extends Handler {
 	// =========================
 	// ! Hook Registration
 	// =========================
@@ -33,7 +32,7 @@ class Backend extends Handler {
 	 *
 	 * @uses Registry::get() to retrieve enabled post types.
 	 */
-	public static function register_hooks() {
+	final public static function register_hooks() {
 		// Don't do anything if not in the backend
 		if ( ! is_backend() ) {
 			return;
@@ -58,7 +57,7 @@ class Backend extends Handler {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function load_textdomain() {
+	final public static function load_textdomain() {
 		// Load the textdomain
 		load_plugin_textdomain( 'pluginname', false, dirname( SLUG_PLUGIN_FILE ) . '/languages' );
 	}
@@ -74,7 +73,7 @@ class Backend extends Handler {
 	 *
 	 * @param array $plugin The information about the plugin and the update.
 	 */
-	public static function update_notice( $plugin ) {
+	final public static function update_notice( $plugin ) {
 		// Get the version number that the update is for
 		$version = $plugin['new_version'];
 
@@ -104,7 +103,7 @@ class Backend extends Handler {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function enqueue_assets(){
+	final public static function enqueue_assets(){
 		// Admin styling
 		wp_enqueue_style( 'pluginname-admin', plugins_url( 'css/admin.css', SLUG_PLUGIN_FILE ), '1.0.0', 'screen' );
 
