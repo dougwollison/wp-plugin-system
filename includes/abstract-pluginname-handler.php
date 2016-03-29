@@ -23,7 +23,6 @@ namespace PluginName;
  *
  * @since 1.0.0
  */
-
 abstract class Handler {
 	/**
 	 * Add an internal method to a filter hook.
@@ -92,5 +91,7 @@ abstract class Handler {
 	 *
 	 * @since 1.0.0
 	 */
-	abstract public static function register_hooks();
+	public static function register_hooks() {
+		// To be written by extending class
+	}
 }
