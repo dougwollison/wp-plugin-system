@@ -1,6 +1,6 @@
 <?php
 /**
- * PluginName Documenter
+ * PluginName Documentation Utility
  *
  * @package PluginName
  * @subpackage Helpers
@@ -11,17 +11,16 @@
 namespace PluginName;
 
 /**
- * The Documentation System
+ * The Documenter System
  *
  * Handles printing out the help screen tabs/sidebar for
- * documenting custom parts of the admin interface.
+ * documenting different parts of the admin interface.
  *
- * @internal Used by the Manager and Localizer.
+ * @internal
  *
  * @since 1.0.0
  */
-
-class Documenter extends Handler {
+final class Documenter extends Handler {
 	/**
 	 * A directory of all help tabs available.
 	 *
@@ -29,9 +28,7 @@ class Documenter extends Handler {
 	 *
 	 * @var array
 	 */
-	protected static $directory = array(
-		// to be written
-	);
+	private static $directory = array();
 
 	/**
 	 * An index of screens registered for help tabs.
@@ -40,7 +37,7 @@ class Documenter extends Handler {
 	 *
 	 * @var array
 	 */
-	protected static $registered_screens = array();
+	private static $registered_screens = array();
 
 	// =========================
 	// ! Hook Registration
@@ -51,7 +48,7 @@ class Documenter extends Handler {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function register_hooks() {
+	final public static function register_hooks() {
 		// Don't do anything if not in the backend
 		if ( ! is_backend() ) {
 			return;
@@ -74,7 +71,7 @@ class Documenter extends Handler {
 	 * @param string $screen The screen ID to add the tab to.
 	 * @param string $tab    The tab ID to add to the screen.
 	 */
-	public static function register_help_tab( $screen, $tab ) {
+	final public static function register_help_tab( $screen, $tab ) {
 		static::$registered_screens[ $screen ] = $tab;
 	}
 
@@ -87,7 +84,7 @@ class Documenter extends Handler {
 	 *
 	 * @param string $screens An array of screen=>tab IDs to register.
 	 */
-	public static function register_help_tabs( $screens ) {
+	final public static function register_help_tabs( $screens ) {
 		foreach ( $screens as $screen => $tab ) {
 			static::register_help_tab( $screen, $tab );
 		}
@@ -107,7 +104,7 @@ class Documenter extends Handler {
 	 *
 	 * @return array The ID, title, and content of the help tab.
 	 */
-	public static function get_tab_data( $tab, $section = null ) {
+	final public static function get_tab_data( $tab, $section = null ) {
 		// Sanitize JUST in case...
 		$tab = sanitize_file_name( $tab );
 		$section = sanitize_file_name( $section );
@@ -138,7 +135,7 @@ class Documenter extends Handler {
 
 		// Return the parsed data
 		return array(
-			'id' => "puginname-{$section}-{$tab}",
+			'id' => "pluginname-{$section}-{$tab}",
 			'title' => $matches[1],
 			'content' => wpautop( $matches[2] ),
 		);
@@ -162,7 +159,7 @@ class Documenter extends Handler {
 	 *
 	 * @param string $help_id Optional. The ID of the tabset to setup.
 	 */
-	public static function setup_help_tabs( $help_id = null ) {
+	final public static function setup_help_tabs( $help_id = null ) {
 		// Get the screen object
 		$screen = get_current_screen();
 
@@ -196,7 +193,7 @@ class Documenter extends Handler {
 		}
 
 		// Add sidebar if enabled
-		if ( $help['sidebar'] ) {
+		if ( isset( $help['sidebar'] ) ) {
 			$data = static::get_tab_data( 'sidebar', $help_id );
 
 			// Only add if there's data
