@@ -40,7 +40,7 @@ abstract class Handler {
 	 * @param int    $priority      Optional. The priority to use for this particular callback.
 	 * @param int    $accepted_args Optional. The number of arguments the callback accepts.
 	 */
-	public static function add_filter( $tag, $method, $priority = 10, $accepted_args = 1 ) {
+	final public static function add_filter( $tag, $method, $priority = 10, $accepted_args = 1 ) {
 		// Only add the filter if it hasn't already been added to the hook
 		if ( has_filter( $tag, array( get_called_class(), $method ) ) === false ) {
 			add_filter( $tag, array( get_called_class(), $method ), $priority, $accepted_args );
@@ -50,7 +50,7 @@ abstract class Handler {
 	/**
 	 * @see Handler::add_filter()
 	 */
-	public static function add_action() {
+	final public static function add_action() {
 		call_user_func_array( 'self::add_filter', func_get_args() );
 	}
 
@@ -68,7 +68,7 @@ abstract class Handler {
 	 *
 	 * @return bool|int The priority it originally had (false if wasn't added).
 	 */
-	public static function remove_filter( $tag, $method ) {
+	final public static function remove_filter( $tag, $method ) {
 		// Get old priority, only remove if it had one
 		$priority = has_filter( $tag, array( get_called_class(), $method ) );
 		if ( $priority !== false ) {
@@ -80,7 +80,7 @@ abstract class Handler {
 	/**
 	 * @see Handler::remove_filter()
 	 */
-	public static function remove_action() {
+	final public static function remove_action() {
 		return call_user_func_array( 'self::remove_filter', func_get_args() );
 	}
 
