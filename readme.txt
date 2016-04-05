@@ -22,5 +22,5 @@ Coming soon.
 
 **Details on each release can be found [on the GitHub releases page](https://github.com/dougwollison/plugin-name/releases) for this project.**
 
-= 1.0 =
+= 1.0.0 =
 Initial public release.
