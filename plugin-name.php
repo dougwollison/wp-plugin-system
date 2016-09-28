@@ -40,6 +40,7 @@ define( 'SLUG_PLUGIN_DIR', dirname( SLUG_PLUGIN_FILE ) );
 
 require( SLUG_PLUGIN_DIR . '/includes/autoloader.php' );
 require( SLUG_PLUGIN_DIR . '/includes/functions-pluginname.php' );
+require( SLUG_PLUGIN_DIR . '/includes/functions-template.php' );
 
 // =========================
 // ! Setup
