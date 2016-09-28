@@ -26,19 +26,16 @@ final class Installer extends Handler {
 	// =========================
 
 	/**
-	 * Register the plugin hooks
+	 * Register the plugin hooks.
 	 *
-	 * @since 1.0.0
-	 *
-	 * @uses SLUG_PLUGIN_FILE to identify the plugin file.
-	 * @uses Loader::plugin_activate() as the activation hook.
-	 * @uses Loader::plugin_deactivate() as the deactivation hook.
-	 * @uses Loader::plugin_uninstall() as the uninstall hook.
+	 * @uses NL_PLUGIN_FILE to identify the plugin file.
+	 * @uses Installer::plugin_activate() as the activation hook.
+	 * @uses Installer::plugin_deactivate() as the deactivation hook.
 	 */
 	public static function register_hooks() {
-		register_activation_hook( SLUG_PLUGIN_FILE, array( get_called_class(), 'plugin_activate' ) );
-		register_deactivation_hook( SLUG_PLUGIN_FILE, array( get_called_class(), 'plugin_deactivate' ) );
-		register_uninstall_hook( SLUG_PLUGIN_FILE, array( get_called_class(), 'plugin_uninstall' ) );
+		// Plugin hooks
+		register_activation_hook( NL_PLUGIN_FILE, array( __CLASS__, 'plugin_activate' ) );
+		register_deactivation_hook( NL_PLUGIN_FILE, array( __CLASS__, 'plugin_deactivate' ) );
 
 		// Upgrade logic
 		static::add_action( 'plugins_loaded', 'upgrade', 10, 0 );
@@ -53,7 +50,7 @@ final class Installer extends Handler {
 	 *
 	 * @since 1.0.0
 	 */
-	protected static function plugin_security_check( $check_referer = null ) {
+	private static function plugin_security_check( $check_referer = null ) {
 		// Make sure they have permisson
 		if ( ! current_user_can( 'activate_plugins' ) ) {
 			return false;
@@ -117,23 +114,6 @@ final class Installer extends Handler {
 		}
 
 		// to be written
-	}
-
-	/**
-	 * Delete database tables and any options.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @uses Loader::plugin_security_check() to check for WP_UNINSTALL_PLUGIN.
-	 *
-	 * @global wpdb $wpdb The database abstraction class instance.
-	 */
-	public static function plugin_uninstall() {
-		if ( ! static::plugin_security_check() ) {
-			return;
-		}
-
-		delete_option( "pluginname_options" );
 	}
 
 	// =========================
