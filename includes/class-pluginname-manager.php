@@ -37,8 +37,8 @@ final class Manager extends Handler {
 		}
 
 		// Settings & Pages
-		static::add_action( 'admin_menu', 'add_menu_pages' );
-		static::add_action( 'admin_init', 'register_settings' );
+		self::add_action( 'admin_menu', 'add_menu_pages' );
+		self::add_action( 'admin_init', 'register_settings' );
 	}
 
 	// =========================
@@ -90,7 +90,7 @@ final class Manager extends Handler {
 	 */
 	public static function register_settings() {
 		register_setting( 'pluginname-options', 'pluginname_options', array( __CLASS__, 'update_options' ) );
-		static::setup_options_fields();
+		self::setup_options_fields();
 	}
 
 	// =========================

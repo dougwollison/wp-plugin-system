@@ -93,7 +93,7 @@ final class Registry {
 	 * @return array The options whitelist.
 	 */
 	public static function get_defaults() {
-		return static::$options_whitelist;
+		return self::$options_whitelist;
 	}
 
 	/**
@@ -109,11 +109,11 @@ final class Registry {
 	 * @return bool Wether or not the option is supported.
 	 */
 	public static function has( &$option ) {
-		if ( isset( static::$options_deprecated[ $option ] ) ) {
-			$option = static::$options_deprecated[ $option ];
+		if ( isset( self::$options_deprecated[ $option ] ) ) {
+			$option = self::$options_deprecated[ $option ];
 		}
 
-		return isset( static::$options_whitelist[ $option ] );
+		return isset( self::$options_whitelist[ $option ] );
 	}
 
 	/**
@@ -130,18 +130,18 @@ final class Registry {
 	 */
 	public static function get( $option, $default = null, $true_value = false, &$has_override = null ) {
 		// Trigger notice error if trying to set an unsupported option
-		if ( ! static::has( $option ) ) {
+		if ( ! self::has( $option ) ) {
 			trigger_error( "[PluginName] The option '{$option}' is not supported.", E_USER_NOTICE );
 		}
 
 		// Check if it's set, return it's value.
-		if ( isset( static::$options[ $option ] ) ) {
+		if ( isset( self::$options[ $option ] ) ) {
 			// Check if it's been overriden, use that unless otherwise requested
-			$has_override = isset( static::$option_overrides[ $option ] );
+			$has_override = isset( self::$option_overrides[ $option ] );
 			if ( $has_override && ! $true_value ) {
-				$value = static::$option_overrides[ $option ];
+				$value = self::$option_overrides[ $option ];
 			} else {
-				$value = static::$options[ $option ];
+				$value = self::$options[ $option ];
 			}
 		} else {
 			$value = $default;
@@ -162,11 +162,11 @@ final class Registry {
 	 */
 	public static function set( $option, $value = null ) {
 		// Trigger notice error if trying to set an unsupported option
-		if ( ! static::has( $option ) ) {
+		if ( ! self::has( $option ) ) {
 			trigger_error( "[PluginName] The option '{$option}' is not supported", E_USER_NOTICE );
 		}
 
-		static::$options[ $option ] = $value;
+		self::$options[ $option ] = $value;
 	}
 
 	/**
@@ -181,11 +181,11 @@ final class Registry {
 	 */
 	public static function override( $option, $value ) {
 		// Trigger notice error if trying to set an unsupported option
-		if ( ! static::has( $option ) ) {
+		if ( ! self::has( $option ) ) {
 			trigger_error( "[PluginName] The option '{$option}' is not supported.", E_USER_NOTICE );
 		}
 
-		static::$options_override[ $option ] = $value;
+		self::$options_override[ $option ] = $value;
 	}
 
 	// =========================
@@ -204,14 +204,14 @@ final class Registry {
 	 * @param bool $reload Should we reload the options?
 	 */
 	public static function load( $reload = false ) {
-		if ( static::$__loaded && ! $reload ) {
+		if ( self::$__loaded && ! $reload ) {
 			// Already did this
 			return;
 		}
 
 		// Load the options
 		$options = get_option( 'pluginname_options' );
-		foreach ( static::$options_whitelist as $option => $default ) {
+		foreach ( self::$options_whitelist as $option => $default ) {
 			$value = $default;
 			if ( isset( $options[ $option ] ) ) {
 				$value = $options[ $option ];
@@ -220,11 +220,11 @@ final class Registry {
 				settype( $value, gettype( $default ) );
 			}
 
-			static::set( $option, $value );
+			self::set( $option, $value );
 		}
 
 		// Flag that we've loaded everything
-		static::$__loaded = true;
+		self::$__loaded = true;
 	}
 
 	/**
@@ -235,6 +235,6 @@ final class Registry {
 	 * @param string $what Optional. Save just options/languages or both (true)?
 	 */
 	public static function save( $what = true ) {
-		update_option( 'pluginname_options', static::$options );
+		update_option( 'pluginname_options', self::$options );
 	}
 }

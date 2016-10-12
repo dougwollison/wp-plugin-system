@@ -102,7 +102,7 @@ final class Settings {
 	 */
 	public static function add_fields( $fields, $page, $section = 'default' ) {
 		foreach ( $fields as $field => $options ) {
-			static::add_field( $field, $options, $page, $section );
+			self::add_field( $field, $options, $page, $section );
 		}
 	}
 
@@ -135,7 +135,7 @@ final class Settings {
 		if ( isset( $array[ $key ] ) ) {
 			// See if we need to go deeper
 			if ( $map ) {
-				return static::extract_value( $array[ $key ], $map );
+				return self::extract_value( $array[ $key ], $map );
 			}
 
 			return $array[ $key ];
@@ -169,7 +169,7 @@ final class Settings {
 
 		// Process the value via the map if necessary
 		if ( ! empty( $map ) ) {
-			$value = static::extract_value( $value, $map );
+			$value = self::extract_value( $value, $map );
 		}
 
 		return $value;
@@ -196,7 +196,7 @@ final class Settings {
 	public static function build_field( $args, $value = null ) {
 		// Get the value for the field if not provided
 		if ( is_null( $value ) ) {
-			$value = static::get_value( $args['option'] );
+			$value = self::get_value( $args['option'] );
 		}
 
 		switch ( $args['type'] ) {
@@ -360,7 +360,7 @@ final class Settings {
 	 * @see Settings::build_inputlist_field() for what it all does.
 	 */
 	private static function build_radiolist_field( $name, $value, $options ) {
-		return static::build_inputlist_field( 'radio', $name, $value, $options );
+		return self::build_inputlist_field( 'radio', $name, $value, $options );
 	}
 
 	/**
@@ -369,7 +369,7 @@ final class Settings {
 	 * @see Settings::build_input_list() for what it all does.
 	 */
 	private static function build_checklist_field( $name, $value, $options ) {
-		return static::build_inputlist_field( 'checkbox', $name, $value, $options );
+		return self::build_inputlist_field( 'checkbox', $name, $value, $options );
 	}
 
 	/**

@@ -46,7 +46,7 @@ final class System extends Handler {
 		Installer::register_hooks();
 
 		// Register global hooks
-		static::register_hooks();
+		self::register_hooks();
 
 		// Register the hooks of the subsystems
 		Backend::register_hooks();

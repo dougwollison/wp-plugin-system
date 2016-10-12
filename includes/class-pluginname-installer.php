@@ -38,7 +38,7 @@ final class Installer extends Handler {
 		register_deactivation_hook( NL_PLUGIN_FILE, array( __CLASS__, 'plugin_deactivate' ) );
 
 		// Upgrade logic
-		static::add_action( 'plugins_loaded', 'upgrade', 10, 0 );
+		self::add_action( 'plugins_loaded', 'upgrade', 10, 0 );
 	}
 
 	// =========================
@@ -86,14 +86,14 @@ final class Installer extends Handler {
 	public static function plugin_activate() {
 		global $wpdb;
 
-		if ( ! static::plugin_security_check( 'activate' ) ) {
+		if ( ! self::plugin_security_check( 'activate' ) ) {
 			return;
 		}
 
 		// Attempt to upgrade, in case we're activating after an plugin update
-		if ( ! static::upgrade() ) {
+		if ( ! self::upgrade() ) {
 			// Otherwise just install the options/tables
-			static::install();
+			self::install();
 		}
 	}
 
@@ -109,7 +109,7 @@ final class Installer extends Handler {
 	public static function plugin_deactivate() {
 		global $wpdb;
 
-		if ( ! static::plugin_security_check( 'deactivate' ) ) {
+		if ( ! self::plugin_security_check( 'deactivate' ) ) {
 			return;
 		}
 

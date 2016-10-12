@@ -37,13 +37,13 @@ final class Backend extends Handler {
 		}
 
 		// Setup stuff
-		static::add_action( 'plugins_loaded', 'load_textdomain', 10, 0 );
+		self::add_action( 'plugins_loaded', 'load_textdomain', 10, 0 );
 
 		// Plugin information
-		static::add_action( 'in_plugin_update_message-' . plugin_basename( SLUG_PLUGIN_FILE ), 'update_notice' );
+		self::add_action( 'in_plugin_update_message-' . plugin_basename( SLUG_PLUGIN_FILE ), 'update_notice' );
 
 		// Script/Style Enqueues
-		static::add_action( 'admin_enqueue_scripts', 'enqueue_assets' );
+		self::add_action( 'admin_enqueue_scripts', 'enqueue_assets' );
 	}
 
 	// =========================
