@@ -22,6 +22,21 @@ namespace PluginName;
  */
 final class AJAX extends Handler {
 	// =========================
+	// ! Properties
+	// =========================
+
+	/**
+	 * Record of added hooks.
+	 *
+	 * @internal Used by the Handler enable/disable methods.
+	 *
+	 * @since 2.6.0
+	 *
+	 * @var array
+	 */
+	protected static $implemented_hooks = array();
+
+	// =========================
 	// ! Hook Registration
 	// =========================
 

@@ -22,6 +22,21 @@ namespace PluginName;
  */
 final class Manager extends Handler {
 	// =========================
+	// ! Properties
+	// =========================
+
+	/**
+	 * Record of added hooks.
+	 *
+	 * @internal Used by the Handler enable/disable methods.
+	 *
+	 * @since 2.6.0
+	 *
+	 * @var array
+	 */
+	protected static $implemented_hooks = array();
+
+	// =========================
 	// ! Hook Registration
 	// =========================
 
@@ -37,8 +52,8 @@ final class Manager extends Handler {
 		}
 
 		// Settings & Pages
-		self::add_action( 'admin_menu', 'add_menu_pages' );
-		self::add_action( 'admin_init', 'register_settings' );
+		self::add_hook( 'admin_menu', 'add_menu_pages' );
+		self::add_hook( 'admin_init', 'register_settings' );
 	}
 
 	// =========================

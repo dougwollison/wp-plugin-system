@@ -22,6 +22,21 @@ namespace PluginName;
  */
 final class Backend extends Handler {
 	// =========================
+	// ! Properties
+	// =========================
+
+	/**
+	 * Record of added hooks.
+	 *
+	 * @internal Used by the Handler enable/disable methods.
+	 *
+	 * @since 2.6.0
+	 *
+	 * @var array
+	 */
+	protected static $implemented_hooks = array();
+
+	// =========================
 	// ! Hook Registration
 	// =========================
 
@@ -37,13 +52,13 @@ final class Backend extends Handler {
 		}
 
 		// Setup stuff
-		self::add_action( 'plugins_loaded', 'load_textdomain', 10, 0 );
+		self::add_hook( 'plugins_loaded', 'load_textdomain', 10, 0 );
 
 		// Plugin information
-		self::add_action( 'in_plugin_update_message-' . plugin_basename( SLUG_PLUGIN_FILE ), 'update_notice' );
+		self::add_hook( 'in_plugin_update_message-' . plugin_basename( SLUG_PLUGIN_FILE ), 'update_notice' );
 
 		// Script/Style Enqueues
-		self::add_action( 'admin_enqueue_scripts', 'enqueue_assets' );
+		self::add_hook( 'admin_enqueue_scripts', 'enqueue_assets' );
 	}
 
 	// =========================
