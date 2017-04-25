@@ -68,4 +68,4 @@ final class Uninstaller {
 	}
 }
 
-PluginName\Uninstaller::run();
+Uninstaller::run();
