@@ -228,11 +228,11 @@ final class Registry {
 	}
 
 	/**
-	 * Save the options and languages to the database.
+	 * Save the options and other settings to the database.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $what Optional. Save just options/languages or both (true)?
+	 * @param string $what Optional. What to save if not everything.
 	 */
 	public static function save( $what = true ) {
 		update_option( 'pluginname_options', self::$options );
