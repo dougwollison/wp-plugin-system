@@ -54,16 +54,16 @@ final class Settings {
 		// Handle prefixing the name with pluginname_options
 		if ( preg_match( '/([^\[]+)(\[.+\])/', $field, $matches ) ) {
 			$id = "pluginname_" . trim( preg_replace( '/[\[\]]+/', '_', $field ), '_' );
-			$name = "pluginname_options[{$matches[1]}]{$matches[2]}";
+			$name = "pluginname_{$page}[{$matches[1]}]{$matches[2]}";
 		} else {
 			$id = "pluginname_{$field}";
-			$name = "pluginname_options[{$field}]";
+			$name = "pluginname_{$page}[{$field}]";
 		}
 
 		// Build the callback arguments
 		$class = sanitize_key( $field );
 		$args = array(
-			'class'     => "slug-settings-field slug-settings-{$page}-field pluginname_{$class}-field",
+			'class'     => "pluginname-settings-field pluginname-settings-{$page}-field pluginname_{$class}-field",
 			'option'    => $field,
 			'id'        => $id,
 			'name'      => $name,
