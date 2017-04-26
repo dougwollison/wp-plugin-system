@@ -133,7 +133,7 @@ final class Manager extends Handler {
 	// =========================
 
 	/**
-	 * Fields for the Translations page.
+	 * Fields for the options page.
 	 *
 	 * @since 1.0.0
 	 */
