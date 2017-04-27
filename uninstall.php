@@ -59,7 +59,7 @@ final class Uninstaller {
 	/**
 	 * Perform the actual uninstallation.
 	 *
-	 * Delete all tables and all options created by nLingual.
+	 * Delete all tables and all options created by PluginName.
 	 *
 	 * @since 1.0.0
 	 */
