@@ -81,7 +81,7 @@ final class Manager extends Handler {
 			_x( '[plugin name]', 'menu title', 'plugin-name' ), // menu title
 			'manage_options', // capability
 			'pluginname-options', // slug
-			array( get_called_class(), 'settings_page' ), // callback
+			array( __CLASS__, 'settings_page' ), // callback
 			'dashicons-admin-generic', // icon
 			90 // Postion; after settings
 		);
@@ -101,7 +101,6 @@ final class Manager extends Handler {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @uses Settings::register() to register the settings.
 	 * @uses Manager::setup_options_fields() to add fields to the main options fields.
 	 */
 	public static function register_settings() {
