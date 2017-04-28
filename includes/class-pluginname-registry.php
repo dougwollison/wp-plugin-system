@@ -210,7 +210,7 @@ final class Registry {
 		}
 
 		// Load the options
-		$options = get_option( 'pluginname_options' );
+		$options = get_option( 'pluginname_options', array() );
 		foreach ( self::$options_whitelist as $option => $default ) {
 			$value = $default;
 			if ( isset( $options[ $option ] ) ) {
