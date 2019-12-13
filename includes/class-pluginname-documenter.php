@@ -178,6 +178,11 @@ final class Documenter extends Handler {
 		// Get the screen object
 		$screen = get_current_screen();
 
+		// Abort if no screen is set
+		if ( ! $screen ) {
+			return;
+		}
+
 		// If no help tab ID is passed, see if one is registered for the screen.
 		if ( is_null( $help_id ) ) {
 			// Abort if no help tab is registered for this screen
