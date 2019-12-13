@@ -27,11 +27,7 @@ $plugin['file'] = strtolower( preg_replace( '/[\W_]+/', '-', $plugin['name'] ) )
 $plugin['ns'] = preg_replace( '/\W+/', '', $plugin['name'] );
 
 // Guess the slug
-if ( strpos( ' ', $plugin['name'] ) ) {
-	$plugin['slug'] = preg_replace( '/([A-Z])\w+( |$)/', '$1', strtoupper( $plugin['name'] ) );
-} else {
-	$plugin['slug'] = strtoupper( substr( $plugin['name'], 0, 2 ) );
-}
+$plugin['slug'] = strtoupper( $plugin['ns'] );
 
 // Offer to override the filename
 if ( $value = readline( "Override assumed directory/file name ({$plugin['file']})? " ) ) {
@@ -48,28 +44,23 @@ if ( $value = readline( "Override assumed slug ({$plugin['slug']})? " ) ) {
 	$plugin['slug'] = $value;
 }
 
-// Get the plugin directory
-$plugin['dir'] = readline( "Where should your plugin be? Leave blank for this boilerplate's parent directory (" . dirname( __DIR__ ) . "): " );
-if ( ! $plugin['dir'] ) {
-	$plugin['dir'] = '../';
-}
-
-// Calculate real path
-$plugin['dir'] = realpath( $plugin['dir'] );
-
 function rename_files( $dir ) {
 	global $plugin;
 
 	$files = scandir( $dir );
 	foreach ( $files as $file ) {
-		if ( substr( $file, 0, 1 ) == '.' || in_array( $file, array( 'build', 'README.md' ) ) ) {
+		if ( substr( $file, 0, 1 ) == '.' || in_array( $file, array( 'build', 'README.md', 'LICENSE' ) ) ) {
 			continue;
 		}
 
-		if ( is_dir( $file ) ) {
-			rename_files( "$dir/$file" );
+		$path = "$dir/$file";
+		$file = str_replace( 'pluginname', strtolower( $plugin['ns'] ), $file );
+
+		if ( is_dir( $path ) ) {
+			rename_files( $path );
 		} else {
-			$content = file_get_contents( "$dir/$file" );
+			$content = file_get_contents( $path );
+
 			$content = str_replace( array(
 				'[plugin name]',
 				'[plugin description]',
@@ -88,18 +79,11 @@ function rename_files( $dir ) {
 				$plugin['slug'],
 			), $content );
 
-			$destination = $plugin['dir'] . '/' . $plugin['file'] . str_replace(
-				array( 'plugin-name', 'pluginname' ),
-				array( $plugin['file'], strtolower( $plugin['ns'] ) ),
-				substr( "$dir/$file", strlen( __DIR__ ) )
-			);
+			file_put_contents( $path, $content );
 
-			if ( ! file_exists( dirname( $destination ) ) ) {
-				mkdir( dirname( $destination ), 0777, true );
-			}
-			file_put_contents( $destination, $content );
+			rename( $path, "$dir/$file" );
 		}
 	}
 }
 
-rename_files( dirname( __FILE__ ) );
+rename_files( __DIR__ );
