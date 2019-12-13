@@ -34,6 +34,33 @@ define( 'PLUGINNAME_PLUGIN_FILE', __FILE__ );
  */
 define( 'PLUGINNAME_PLUGIN_DIR', dirname( PLUGINNAME_PLUGIN_FILE ) );
 
+/**
+ * Reference to the plugin slug.
+ *
+ * @since 1.0.0
+ *
+ * @var string
+ */
+define( 'PLUGINNAME_PLUGIN_SLUG', basename( PLUGINNAME_PLUGIN_DIR ) . '/' . basename( PLUGINNAME_PLUGIN_FILE ) );
+
+/**
+ * Identifies the current plugin version.
+ *
+ * @since 1.0.0
+ *
+ * @var string
+ */
+define( 'PLUGINNAME_PLUGIN_VERSION', '1.0.0' );
+
+/**
+ * Identifies the current database version.
+ *
+ * @since 1.0.0
+ *
+ * @var string
+ */
+define( 'PLUGINNAME_DB_VERSION', '1.0.0' );
+
 // =========================
 // ! Includes
 // =========================
