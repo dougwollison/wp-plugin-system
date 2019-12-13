@@ -151,7 +151,7 @@ final class Registry {
 	}
 
 	/**
-	 * Override a option value.
+	 * Update a option value.
 	 *
 	 * Will not work for $languages, that has it's own method.
 	 *
@@ -163,7 +163,7 @@ final class Registry {
 	public static function set( $option, $value = null ) {
 		// Trigger notice error if trying to set an unsupported option
 		if ( ! self::has( $option ) ) {
-			trigger_error( "[PluginName] The option '{$option}' is not supported", E_USER_NOTICE );
+			trigger_error( "[PluginName] The option '{$option}' is not supported.", E_USER_NOTICE );
 		}
 
 		self::$options[ $option ] = $value;
