@@ -346,7 +346,7 @@ final class Settings {
 		}
 
 		// Build the list, including a fallback "none" input
-		$html = '<fieldset class="nl-inputlist">' .
+		$html = '<fieldset class="pluginname-inputlist">' .
 			sprintf( '<input type="hidden" name="%s" value="" />', $name ) .
 			implode( '<br /> ', $inputs ) .
 		'</fieldset>';
@@ -382,6 +382,6 @@ final class Settings {
 	 * @param string $text  The notice text.
 	 */
 	private static function print_notice( $text ) {
-		printf( '<p><span class="nl-settings-notice">%s</span></p>', $text );
+		printf( '<p><span class="pluginname-settings-notice">%s</span></p>', $text );
 	}
 }
