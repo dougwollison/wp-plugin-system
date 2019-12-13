@@ -103,7 +103,17 @@ final class Backend extends Handler {
 
 		// Print out the notice if there is one
 		if ( $notice ) {
-			echo apply_filters( 'the_content', $notice );
+			// Since the notice is normally contained within a single div/p combo,
+			// we need to close it before printing the update notice
+			?>
+			</p></div>
+			<div class="notice inline notice-warning notice-alt">
+				<?php echo apply_filters( 'the_content', $notice ); ?>
+			</div>
+			<div><p>
+			<?php
+			// Now that we've re-opened it, there will be
+			// an empty div/p combo after our notice
 		}
 	}
 
