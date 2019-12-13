@@ -77,7 +77,7 @@ function rename_files( $dir ) {
 				'PluginName',
 				'pluginname',
 				'plugin-name',
-				'SLUG',
+				'PLUGINNAME',
 			), array(
 				$plugin['name'],
 				$plugin['desc'],
@@ -85,7 +85,7 @@ function rename_files( $dir ) {
 				$plugin['ns'],
 				strtolower( $plugin['ns'] ),
 				$plugin['file'],
-				$plugin['slug']
+				$plugin['slug'],
 			), $content );
 
 			$destination = $plugin['dir'] . '/' . $plugin['file'] . str_replace(

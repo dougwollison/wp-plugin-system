@@ -125,7 +125,7 @@ final class Documenter extends Handler {
 		$section = sanitize_file_name( $section );
 
 		// Build the path to the doc file
-		$path = SLUG_PLUGIN_DIR . '/documentation';
+		$path = PLUGINNAME_PLUGIN_DIR . '/documentation';
 
 		// If a section is specified, add to the path
 		if ( ! is_null( $section ) ) {

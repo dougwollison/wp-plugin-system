@@ -23,7 +23,7 @@ Domain Path: /languages
  *
  * @var string
  */
-define( 'SLUG_PLUGIN_FILE', __FILE__ );
+define( 'PLUGINNAME_PLUGIN_FILE', __FILE__ );
 
 /**
  * Reference to the plugin directory.
@@ -32,15 +32,15 @@ define( 'SLUG_PLUGIN_FILE', __FILE__ );
  *
  * @var string
  */
-define( 'SLUG_PLUGIN_DIR', dirname( SLUG_PLUGIN_FILE ) );
+define( 'PLUGINNAME_PLUGIN_DIR', dirname( PLUGINNAME_PLUGIN_FILE ) );
 
 // =========================
 // ! Includes
 // =========================
 
-require( SLUG_PLUGIN_DIR . '/includes/autoloader.php' );
-require( SLUG_PLUGIN_DIR . '/includes/functions-pluginname.php' );
-require( SLUG_PLUGIN_DIR . '/includes/functions-template.php' );
+require PLUGINNAME_PLUGIN_DIR . '/includes/autoloader.php';
+require PLUGINNAME_PLUGIN_DIR . '/includes/functions-pluginname.php';
+require PLUGINNAME_PLUGIN_DIR . '/includes/functions-gettext.php';
 
 // =========================
 // ! Setup

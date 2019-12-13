@@ -55,7 +55,7 @@ final class Backend extends Handler {
 		self::add_hook( 'plugins_loaded', 'load_textdomain', 10, 0 );
 
 		// Plugin information
-		self::add_hook( 'in_plugin_update_message-' . plugin_basename( SLUG_PLUGIN_FILE ), 'update_notice' );
+		self::add_hook( 'in_plugin_update_message-' . plugin_basename( PLUGINNAME_PLUGIN_FILE ), 'update_notice' );
 
 		// Script/Style Enqueues
 		self::add_hook( 'admin_enqueue_scripts', 'enqueue_assets' );
@@ -72,7 +72,7 @@ final class Backend extends Handler {
 	 */
 	public static function load_textdomain() {
 		// Load the textdomain
-		load_plugin_textdomain( 'pluginname', false, dirname( SLUG_PLUGIN_FILE ) . '/languages' );
+		load_plugin_textdomain( 'pluginname', false, dirname( PLUGINNAME_PLUGIN_FILE ) . '/languages' );
 	}
 
 	// =========================
@@ -128,10 +128,10 @@ final class Backend extends Handler {
 	 */
 	public static function enqueue_assets(){
 		// Admin styling
-		wp_enqueue_style( 'pluginname-admin', plugins_url( 'css/admin.css', SLUG_PLUGIN_FILE ), '1.0.0', 'screen' );
+		wp_enqueue_style( 'pluginname-admin', plugins_url( 'css/admin.css', PLUGINNAME_PLUGIN_FILE ), '1.0.0', 'screen' );
 
 		// Admin javascript
-		wp_enqueue_script( 'pluginname-admin-js', plugins_url( 'js/admin.js', SLUG_PLUGIN_FILE ), array(), '1.0.0' );
+		wp_enqueue_script( 'pluginname-admin-js', plugins_url( 'js/admin.js', PLUGINNAME_PLUGIN_FILE ), array(), '1.0.0' );
 
 		// Localize the javascript
 		wp_localize_script( 'pluginname-admin-js', 'pluginnameL10n', array(
