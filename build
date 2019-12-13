@@ -54,7 +54,13 @@ function rename_files( $dir ) {
 		}
 
 		$path = "$dir/$file";
-		$file = str_replace( 'pluginname', strtolower( $plugin['ns'] ), $file );
+		$file = str_replace( array(
+			'plugin-name',
+			'pluginname',
+		), array(
+			$plugin['file'],
+			strtolower( $plugin['ns'] ),
+		), $file );
 
 		if ( is_dir( $path ) ) {
 			rename_files( $path );
