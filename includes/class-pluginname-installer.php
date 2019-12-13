@@ -160,6 +160,6 @@ final class Installer extends Handler {
 	 * @return bool Wether or not an upgrade was performed.
 	 */
 	public static function upgrade() {
-		// to be written
+		return false;
 	}
 }
