@@ -67,7 +67,6 @@ define( 'PLUGINNAME_DB_VERSION', '1.0.0' );
 
 require PLUGINNAME_PLUGIN_DIR . '/includes/autoloader.php';
 require PLUGINNAME_PLUGIN_DIR . '/includes/functions-pluginname.php';
-require PLUGINNAME_PLUGIN_DIR . '/includes/functions-gettext.php';
 
 // =========================
 // ! Setup
