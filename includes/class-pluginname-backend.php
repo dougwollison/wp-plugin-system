@@ -128,10 +128,10 @@ final class Backend extends Handler {
 	 */
 	public static function enqueue_assets(){
 		// Admin styling
-		wp_enqueue_style( 'pluginname-admin', plugins_url( 'css/admin.css', PLUGINNAME_PLUGIN_FILE ), '1.0.0', 'screen' );
+		wp_enqueue_style( 'pluginname-admin', plugins_url( 'css/admin.css', PLUGINNAME_PLUGIN_FILE ), PLUGINNAME_PLUGIN_VERSION, 'screen' );
 
 		// Admin javascript
-		wp_enqueue_script( 'pluginname-admin-js', plugins_url( 'js/admin.js', PLUGINNAME_PLUGIN_FILE ), array(), '1.0.0' );
+		wp_enqueue_script( 'pluginname-admin-js', plugins_url( 'js/admin.js', PLUGINNAME_PLUGIN_FILE ), array(), PLUGINNAME_PLUGIN_VERSION );
 
 		// Localize the javascript
 		wp_localize_script( 'pluginname-admin-js', 'pluginnameL10n', array(
