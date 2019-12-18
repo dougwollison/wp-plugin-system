@@ -54,9 +54,6 @@ final class Backend extends Handler {
 		// Setup stuff
 		self::add_hook( 'plugins_loaded', 'load_textdomain', 10, 0 );
 
-		// Plugin information
-		self::add_hook( 'in_plugin_update_message-' . plugin_basename( PLUGINNAME_PLUGIN_FILE ), 'update_notice' );
-
 		// Script/Style Enqueues
 		self::add_hook( 'admin_enqueue_scripts', 'enqueue_assets' );
 	}
@@ -73,48 +70,6 @@ final class Backend extends Handler {
 	public static function load_textdomain() {
 		// Load the textdomain
 		load_plugin_textdomain( 'pluginname', false, dirname( PLUGINNAME_PLUGIN_FILE ) . '/languages' );
-	}
-
-	// =========================
-	// ! Plugin Information
-	// =========================
-
-	/**
-	 * In case of update, check for notice about the update.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array $plugin The information about the plugin and the update.
-	 */
-	public static function update_notice( $plugin ) {
-		// Get the version number that the update is for
-		$version = $plugin['new_version'];
-
-		// Check if there's a notice about the update
-		$transient = "pluginname-update-notice-{$version}";
-		$notice = get_transient( $transient );
-		if ( $notice === false ) {
-			// Hasn't been saved, fetch it from the SVN repo
-			$notice = @file_get_contents( "http://plugins.svn.wordpress.org/pluginname/assets/notice-{$version}.txt" ) ?: '';
-
-			// Save the notice
-			set_transient( $transient, $notice, YEAR_IN_SECONDS );
-		}
-
-		// Print out the notice if there is one
-		if ( $notice ) {
-			// Since the notice is normally contained within a single div/p combo,
-			// we need to close it before printing the update notice
-			?>
-			</p></div>
-			<div class="notice inline notice-warning notice-alt">
-				<?php echo apply_filters( 'the_content', $notice ); ?>
-			</div>
-			<div><p>
-			<?php
-			// Now that we've re-opened it, there will be
-			// an empty div/p combo after our notice
-		}
 	}
 
 	// =========================
